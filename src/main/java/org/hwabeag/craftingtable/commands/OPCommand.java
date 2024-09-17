@@ -29,6 +29,7 @@ public class OPCommand implements CommandExecutor {
                     p.sendMessage(Prefix + " /특수조합대관리 보상변경 [제목] - 특수조합 방법을 제작합니다.");
                     p.sendMessage(Prefix + " /특수조합대관리 세팅 [제목] - 특수조합 방법을 세팅합니다.");
                     p.sendMessage(Prefix + " /특수조합대관리 삭제 [제목] - 특수조합 방법을 삭제합니다.");
+                    p.sendMessage(Prefix + " /특수조합대관리 목록 - 특수조합 목록을 확인합니다.");
                     p.sendMessage(Prefix + " /특수조합대관리 리로드 - 특수조합 방법을 리로드 합니다.");
                     return true;
                 }
@@ -112,6 +113,14 @@ public class OPCommand implements CommandExecutor {
                     }
                     return true;
                 }
+                if (args[0].equals("목록")) {
+                    p.sendMessage(Prefix + " 특수조합 목록");
+                    for (String key : Objects.requireNonNull(CraftingConfig.getConfigurationSection("특수조합법.")).getKeys(false)) {
+                        p.sendMessage(Prefix + " " + key);
+                    }
+                    p.sendMessage(Prefix + " 특수조합 목록을 불러왔습니다.");
+                    return true;
+                }
                 if (args[0].equals("리로드")) {
                     CraftingListLoading();
                     p.sendMessage(Prefix + " 특수조합대 정보를 리로드 했습니다.");
@@ -121,6 +130,7 @@ public class OPCommand implements CommandExecutor {
                 p.sendMessage(Prefix + " /특수조합대관리 보상변경 [제목] - 특수조합 방법을 제작합니다.");
                 p.sendMessage(Prefix + " /특수조합대관리 세팅 [제목] - 특수조합 방법을 세팅합니다.");
                 p.sendMessage(Prefix + " /특수조합대관리 삭제 [제목] - 특수조합 방법을 삭제합니다.");
+                p.sendMessage(Prefix + " /특수조합대관리 목록 - 특수조합 목록을 확인합니다.");
                 p.sendMessage(Prefix + " /특수조합대관리 리로드 - 특수조합 방법을 리로드 합니다.");
             } else {
                 p.sendMessage(Prefix + " 당신은 권한이 없습니다.");
