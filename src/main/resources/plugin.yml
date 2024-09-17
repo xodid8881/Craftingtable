@@ -1,0 +1,13 @@
+name: Craftingtable
+version: '${version}'
+main: org.hwabeag.craftingtable.Craftingtable
+api-version: '1.20'
+
+commands:
+  특수조합대:
+    description: 특수조합대를 오픈합니다.
+    usage: /특수조합대
+    aliases: [특조, ㅌㅅㅈㅎㄷ]
+  특수조합대관리:
+    description: 특수조합대관리를 관리합니다.
+    usage: /특수조합대관리
