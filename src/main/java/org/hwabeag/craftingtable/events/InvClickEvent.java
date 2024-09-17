@@ -1,7 +1,7 @@
 package org.hwabeag.craftingtable.events;
 
+import dev.lone.itemsadder.api.CustomStack;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -89,28 +89,43 @@ public class InvClickEvent implements Listener {
                     e.getInventory().clear();
                     player.closeInventory();
                     if(CraftingConfig.getString("시도조합." + name) != null){
-                        if (CraftingConfig.getString("시도조합." + name) != "없음"){
+                        if (CraftingConfig.getString("시도조합." + name) != "없음") {
                             String CraftingName = CraftingConfig.getString("시도조합." + name);
 
                             int N = 0;
                             int[] ItemRemove = {};
-                            while (N <= 8){
+                            while (N <= 8) {
                                 int[] Number = {12, 13, 14, 21, 22, 23, 30, 31, 32};
                                 int Slot = Number[N];
-                                if (!player.getInventory().contains(CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot).getType())) {
-                                    player.sendMessage(Prefix + " 아이템이 부족함에 조합이 불가능 합니다.");
-                                    GiveRemoveItem (player, ItemRemove);
-                                    return;
-                                } else {
-                                    @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
-                                    player.getInventory().removeItem(item);
-                                    int[] newArray = Arrays.copyOf(ItemRemove, ItemRemove.length + 1);
-                                    newArray[newArray.length - 1] = Slot;
-                                    ItemRemove = newArray;
+                                CustomStack stack = CustomStack.getInstance(CraftingConfig.getString("특수조합법." + CraftingName + ".재료." + Slot));
+                                if (stack != null) {
+                                    ItemStack itemStack = stack.getItemStack();
+                                    if (!player.getInventory().contains(itemStack.getType())) {
+                                        player.sendMessage(Prefix + " 커스텀 조합 아이템이 부족함에 조합이 불가능 합니다.");
+                                        GiveRemoveItem(player, ItemRemove);
+                                        return;
+                                    } else {
+                                        @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
+                                        player.getInventory().removeItem(item);
+                                        int[] newArray = Arrays.copyOf(ItemRemove, ItemRemove.length + 1);
+                                        newArray[newArray.length - 1] = Slot;
+                                        ItemRemove = newArray;
+                                    }
+                                } else if (CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot) != null) {
+                                    if (!player.getInventory().contains(CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot).getType())) {
+                                        player.sendMessage(Prefix + " 조합 아이템이 부족함에 조합이 불가능 합니다.");
+                                        GiveRemoveItem(player, ItemRemove);
+                                        return;
+                                    } else {
+                                        @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
+                                        player.getInventory().removeItem(item);
+                                        int[] newArray = Arrays.copyOf(ItemRemove, ItemRemove.length + 1);
+                                        newArray[newArray.length - 1] = Slot;
+                                        ItemRemove = newArray;
+                                    }
                                 }
                                 N += 1;
                             }
-
                             @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".보상");
                             player.getInventory().addItem(item);
                             player.sendMessage(Prefix + " " + CraftingName + " 조합을 성공했습니다.");

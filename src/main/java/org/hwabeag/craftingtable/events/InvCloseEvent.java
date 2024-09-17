@@ -28,7 +28,7 @@ public class InvCloseEvent implements Listener {
                     while (N <= 8){
                         int[] Number = {12, 13, 14, 21, 22, 23, 30, 31, 32};
                         int Slot = Number[N];
-                        if (Objects.requireNonNull(e.getInventory().getItem(Slot)).getType() != Material.AIR) {
+                        if (e.getInventory().getItem(Slot) != null) {
                             if (CraftingConfig.getItemStack("특수조합법." + craftingname + ".재료." + Slot) != null) {
                                 @Nullable ItemStack item = e.getInventory().getItem(Slot);
                                 CraftingConfig.set("특수조합법." + craftingname + ".재료." + Slot, item);

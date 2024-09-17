@@ -47,3 +47,13 @@ processResources {
         expand props
     }
 }
+
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    compileOnly 'com.github.LoneDev6:API-ItemsAdder:3.6.3-beta-14'
+}

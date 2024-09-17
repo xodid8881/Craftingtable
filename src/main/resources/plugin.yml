@@ -11,3 +11,5 @@ commands:
   특수조합대관리:
     description: 특수조합대관리를 관리합니다.
     usage: /특수조합대관리
+
+depend: [ItemsAdder]

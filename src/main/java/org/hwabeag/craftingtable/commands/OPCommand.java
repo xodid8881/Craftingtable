@@ -108,6 +108,7 @@ public class OPCommand implements CommandExecutor {
                         CraftingConfig.set("특수조합법." + args[1], null);
                         ConfigManager.saveConfigs();
                         p.sendMessage(Prefix + " " + args[1] + " 이름으로 특수조합법을 삭제했습니다.");
+                        p.sendMessage(Prefix + " /특수조합대관리 리로드 - 특수조합 방법을 리로드 합니다.");
                     } else {
                         p.sendMessage(Prefix + " " + args[1] + " 이름으로 특수조합법이 존재하지 않습니다.");
                     }
