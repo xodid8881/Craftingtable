@@ -86,7 +86,7 @@ public class OPCommand implements CommandExecutor {
                     }
                     if (CraftingConfig.getString("특수조합법." + args[1]) != null) {
                         String name = p.getName();
-                        if (CraftingConfig.getString("특수조합법." + args[1]) != null) {
+                        if (CraftingConfig.getString("특수조합세팅." + name) != null) {
                             CraftingConfig.set("특수조합세팅." + name, args[1]);
                         } else {
                             CraftingConfig.addDefault("특수조합세팅." + name, args[1]);
