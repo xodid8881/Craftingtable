@@ -1,10 +1,12 @@
 package org.hwabeag.craftingtable.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,12 +15,36 @@ import org.hwabeag.craftingtable.inventorys.CraftingSettingGUI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class OPCommand implements CommandExecutor {
+public class OPCommand implements TabCompleter, @Nullable CommandExecutor {
 
     FileConfiguration CraftingConfig = ConfigManager.getConfig("craftingtable");
     String Prefix = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(CraftingConfig.getString("craftingtable.prefix")));
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length == 1) {
+            List<String> list = new ArrayList<String>();
+            list.add("생성");
+            list.add("보상변경");
+            list.add("세팅");
+            list.add("삭제");
+            list.add("삭제");
+            list.add("리로드");
+            return list;
+        }
+        if (args.length == 2) {
+            List<String> list = new ArrayList<String>();
+            if (CraftingConfig.getString("특수조합법") != null) {
+                list.addAll(Objects.requireNonNull(CraftingConfig.getConfigurationSection("특수조합법")).getKeys(false));
+                return list;
+            }
+        }
+        return null;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
