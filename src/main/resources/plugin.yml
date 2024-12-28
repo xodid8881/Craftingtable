@@ -1,5 +1,5 @@
 name: Craftingtable
-version: '${version}'
+version: '1.0.1'
 main: org.hwabeag.craftingtable.Craftingtable
 api-version: '1.20'
 
