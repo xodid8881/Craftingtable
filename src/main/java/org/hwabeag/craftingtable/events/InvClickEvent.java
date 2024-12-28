@@ -1,7 +1,7 @@
 package org.hwabeag.craftingtable.events;
 
-import dev.lone.itemsadder.api.CustomStack;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,8 +25,8 @@ public class InvClickEvent implements Listener {
         String name = player.getName();
         String CraftingName = CraftingConfig.getString("시도조합." + name);
         int N = 0;
-        if(slot.length != 0) {
-            while (N <= slot.length-1) {
+        if (slot.length != 0) {
+            while (N <= slot.length - 1) {
                 int ItemSlot = slot[N];
                 @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + ItemSlot);
                 player.getInventory().addItem(item);
@@ -34,6 +34,7 @@ public class InvClickEvent implements Listener {
             }
         }
     }
+
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null)
@@ -47,24 +48,24 @@ public class InvClickEvent implements Listener {
                 if (CraftingConfig.getString("특수조합법." + clickitem) != null) {
 
                     int N = 0;
-                    while (N <= 8){
+                    while (N <= 8) {
                         int[] Number = {10, 11, 12, 19, 20, 21, 28, 29, 30};
                         int Slot = Number[N];
-                        e.getInventory().setItem(Slot,null);
+                        e.getInventory().setItem(Slot, null);
                         N += 1;
                     }
                     N = 0;
-                    while (N <= 8){
+                    while (N <= 8) {
                         int[] Number = {10, 11, 12, 19, 20, 21, 28, 29, 30};
                         int Slot = Number[N];
                         int[] ItemNumber = {12, 13, 14, 21, 22, 23, 30, 31, 32};
                         int ItemSlot = ItemNumber[N];
                         @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + clickitem + ".재료." + ItemSlot);
-                        e.getInventory().setItem(Slot,item);
+                        e.getInventory().setItem(Slot, item);
                         N += 1;
                     }
 
-                    if(CraftingConfig.getString("시도조합." + name) != null){
+                    if (CraftingConfig.getString("시도조합." + name) != null) {
                         CraftingConfig.set("시도조합." + name, clickitem);
                         ConfigManager.saveConfigs();
                     }
@@ -88,7 +89,7 @@ public class InvClickEvent implements Listener {
                 if (clickitem.equals(ChatColor.translateAlternateColorCodes('&', "&a조합하기"))) {
                     e.getInventory().clear();
                     player.closeInventory();
-                    if(CraftingConfig.getString("시도조합." + name) != null){
+                    if (CraftingConfig.getString("시도조합." + name) != null) {
                         if (CraftingConfig.getString("시도조합." + name) != "없음") {
                             String CraftingName = CraftingConfig.getString("시도조합." + name);
 
@@ -97,27 +98,14 @@ public class InvClickEvent implements Listener {
                             while (N <= 8) {
                                 int[] Number = {12, 13, 14, 21, 22, 23, 30, 31, 32};
                                 int Slot = Number[N];
-                                CustomStack stack = CustomStack.getInstance(CraftingConfig.getString("특수조합법." + CraftingName + ".재료." + Slot));
-                                if (stack != null) {
-                                    ItemStack itemStack = stack.getItemStack();
-                                    if (!player.getInventory().contains(itemStack.getType())) {
-                                        player.sendMessage(Prefix + " 커스텀 조합 아이템이 부족함에 조합이 불가능 합니다.");
-                                        GiveRemoveItem(player, ItemRemove);
-                                        return;
-                                    } else {
-                                        @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
-                                        player.getInventory().removeItem(item);
-                                        int[] newArray = Arrays.copyOf(ItemRemove, ItemRemove.length + 1);
-                                        newArray[newArray.length - 1] = Slot;
-                                        ItemRemove = newArray;
-                                    }
-                                } else if (CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot) != null) {
-                                    if (!player.getInventory().contains(CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot).getType())) {
+                                @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
+                                if (CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot) != null) {
+                                    int Amount = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot).getAmount();
+                                    if (!player.getInventory().containsAtLeast(item, Amount)) {
                                         player.sendMessage(Prefix + " 조합 아이템이 부족함에 조합이 불가능 합니다.");
                                         GiveRemoveItem(player, ItemRemove);
                                         return;
                                     } else {
-                                        @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".재료." + Slot);
                                         player.getInventory().removeItem(item);
                                         int[] newArray = Arrays.copyOf(ItemRemove, ItemRemove.length + 1);
                                         newArray[newArray.length - 1] = Slot;
@@ -154,7 +142,7 @@ public class InvClickEvent implements Listener {
                 String clickitem = e.getCurrentItem().getItemMeta().getDisplayName();
                 Player player = (Player) e.getWhoClicked();
                 String name = player.getName();
-                if (clickitem.equals(ChatColor.translateAlternateColorCodes('&', "&a라인"))){
+                if (clickitem.equals(ChatColor.translateAlternateColorCodes('&', "&a라인"))) {
                     e.setCancelled(true);
                 }
             }
