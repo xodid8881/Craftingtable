@@ -82,12 +82,13 @@ public class CraftingGUI implements Listener {
             if (CraftingConfig.getString("특수조합리스트." + page + "." + slot[i]) != null){
                 String ItemName = CraftingConfig.getString("특수조합리스트." + page + "." + slot[i]);
                 ItemStack item = CraftingConfig.getItemStack("특수조합법." + ItemName + ".보상");
+                item = item.clone();
                 ItemMeta itemMeta = item.getItemMeta();
                 itemMeta.setDisplayName(ItemName);
                 item.setItemMeta(itemMeta);
                 inv.setItem(slot[i],item);
             }
-            i += 1;
+            i++;
         }
     }
 

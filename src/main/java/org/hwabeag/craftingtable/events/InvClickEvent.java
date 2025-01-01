@@ -114,8 +114,8 @@ public class InvClickEvent implements Listener {
                                 }
                                 N += 1;
                             }
-                            @Nullable ItemStack item = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".보상");
-                            player.getInventory().addItem(item);
+                            @Nullable ItemStack CraftingItem = CraftingConfig.getItemStack("특수조합법." + CraftingName + ".보상");
+                            player.getInventory().addItem(CraftingItem);
                             player.sendMessage(Prefix + " " + CraftingName + " 조합을 성공했습니다.");
                             return;
                         }

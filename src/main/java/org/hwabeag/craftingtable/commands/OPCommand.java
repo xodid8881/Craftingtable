@@ -183,16 +183,16 @@ public class OPCommand implements TabCompleter, @Nullable CommandExecutor {
                 int[] Number = {6, 7, 8, 15, 16, 17, 24, 25, 26, 33, 34, 35};
                 int Slot = Number[N];
                 N += 1;
-                if (N >= 11){
-                    N = 0;
-                    P += 1;
-                }
                 if (CraftingConfig.getString("특수조합리스트") == null) {
                     CraftingConfig.addDefault("특수조합리스트." + P + "." + Slot, key);
                     ConfigManager.saveConfigs();
                 } else {
                     CraftingConfig.set("특수조합리스트." + P + "." + Slot, key);
                     ConfigManager.saveConfigs();
+                }
+                if (N > 11){
+                    N = 0;
+                    P += 1;
                 }
             }
         }
